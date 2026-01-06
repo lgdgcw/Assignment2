@@ -1,5 +1,6 @@
-public class Adopter {
+import java.util.Objects;
 
+public class Adopter {
     private String fullName;
     private int age;
     private String phone;
@@ -11,56 +12,35 @@ public class Adopter {
         this.phone = phone;
     }
 
-    // Getters & Setters (now USED)
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public Pet getAdoptedPet() {
-        return adoptedPet;
-    }
-
     public void adoptPet(Pet pet) {
         if (pet.isAdopted()) {
-            System.out.println("Sorry, " + pet.getName() + " is already adopted.");
+            System.out.println("Pet already adopted.");
         } else {
             adoptedPet = pet;
             pet.setAdopted(true);
-            System.out.println(fullName + " adopted " + pet.getName());
         }
     }
 
-    public void displayInfo() {
-        System.out.println(
-                "Adopter: " + getFullName() +
-                        ", Age: " + getAge() +
-                        ", Phone: " + getPhone()
-        );
+    @Override
+    public String toString() {
+        return "Adopter{" +
+                "fullName='" + fullName + '\'' +
+                ", age=" + age +
+                ", phone='" + phone + '\'' +
+                ", adoptedPet=" + adoptedPet +
+                '}';
+    }
 
-        if (getAdoptedPet() != null) {
-            System.out.println("Adopted pet: " + getAdoptedPet().getName());
-        } else {
-            System.out.println("No adopted pets.");
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Adopter)) return false;
+        Adopter adopter = (Adopter) o;
+        return phone.equals(adopter.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(phone);
     }
 }

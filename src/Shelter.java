@@ -1,52 +1,46 @@
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class Shelter {
-
     private String name;
     private String address;
-    private final ArrayList<Pet> pets;
+    private List<Pet> pets = new ArrayList<>();
 
     public Shelter(String name, String address) {
         this.name = name;
-        this.address = address;
-        this.pets = new ArrayList<>();
-    }
-
-    // Getters & setters USED
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
         this.address = address;
     }
 
     public void addPet(Pet pet) {
         pets.add(pet);
-        System.out.println(pet.getName() + " added to shelter.");
+    }
+
+    // SEARCH
+    public Pet findPetById(int id) {
+        for (Pet pet : pets) {
+            if (pet.getId() == id) return pet;
+        }
+        return null;
+    }
+
+    // FILTER
+    public List<Pet> getAvailablePets() {
+        List<Pet> result = new ArrayList<>();
+        for (Pet pet : pets) {
+            if (!pet.isAdopted()) result.add(pet);
+        }
+        return result;
+    }
+
+    // SORT
+    public void sortByAge() {
+        pets.sort(Comparator.comparingInt(Pet::getAge));
     }
 
     public void showAllPets() {
-        System.out.println("\nPets in shelter " + getName() + ":");
         for (Pet pet : pets) {
-            pet.displayInfo();
+            System.out.println(pet);
         }
-    }
-
-    public Pet findPetById(int id) {
-        for (Pet pet : pets) {
-            if (pet.getId() == id) {
-                return pet;
-            }
-        }
-        return null;
     }
 }
